@@ -1,0 +1,92 @@
+
+
+GraphedExpression="g_motor[0].controller.phase_curr_A", Color=#e56a6f, Show=0
+GraphedExpression="g_motor[0].controller.foc.iq_mea", Color=#35792b, Show=0
+GraphedExpression="g_motor[0].controller.foc.id_mea", Color=#769dda, Show=0
+GraphedExpression="g_motor[0].hall.vel_est_filtered_rads ", Color=#b14f0d, Show=0
+OpenDocument="main.c", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Core/Src/main.c", Line=73
+OpenDocument="motor.h", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Firmware/controller/motor.h", Line=34
+OpenDocument="controller.c", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Firmware/controller/controller.c", Line=32
+OpenDocument="foc.h", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Firmware/controller/foc.h", Line=0
+OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=0, w=288, h=466, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=3, w=1086, h=103, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Disassembly", DockArea=BOTTOM, x=4, y=0, w=476, h=1431, TabPos=0, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=1, w=1086, h=139, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VectorCatchIndexMask=254
+OpenWindow="Memory 1", DockArea=BOTTOM, x=4, y=0, w=476, h=1431, TabPos=1, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x20000248
+OpenWindow="Watched Data 1", DockArea=BOTTOM, x=3, y=0, w=1794, h=1462, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=1086, h=103, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Memory Usage", DockArea=LEFT, x=0, y=2, w=1086, h=103, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Terminal", DockArea=BOTTOM, x=1, y=0, w=122, h=1462, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Data Sampling", DockArea=BOTTOM, x=0, y=0, w=814, h=1462, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
+OpenWindow="Console", DockArea=BOTTOM, x=2, y=0, w=470, h=1462, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
+TableHeader="Vector Catches", SortCol="", SortOrder="ASCENDING", VisibleCols=["";"Vector Catch";"Description"], ColWidths=[50;300;721]
+TableHeader="Break & Tracepoints", SortCol="", SortOrder="ASCENDING", VisibleCols=["";"Type";"Location";"Extras"], ColWidths=[100;100;116;770]
+TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[832;113;100;100;434]
+TableHeader="Source Files", SortCol="File", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[554;126;100;100;1722]
+TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" g_motor[0].controller.phase_curr_A";" g_motor[0].controller.foc.iq_mea";" g_motor[0].controller.foc.id_mea";" g_motor[0].hall.vel_est_filtered_rads "], ColWidths=[100;100;100;100;100;100]
+TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[490;100;100;100;100;114;141;161;168]
+TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;157;504]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[429;291;134;925]
+TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;1573]
+WatchedExpression="g_dbg_init", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_dbg_motor_start", Window=Watched Data 1
+WatchedExpression="g_dbg_motor_mode", RefreshRate=1, Window=Watched Data 1
+WatchedExpression="g_dbg_id_target", Window=Watched Data 1
+WatchedExpression="g_dbg_iq_target", Window=Watched Data 1
+WatchedExpression="g_dbg_velocity_target", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_openloop_vq_limit_dbg", RefreshRate=5, DisplayFormat=DISPLAY_FORMAT_HEX, Window=Watched Data 1
+WatchedExpression="g_openloop_omega_e_dbg", RefreshRate=5, DisplayFormat=DISPLAY_FORMAT_HEX, Window=Watched Data 1
+WatchedExpression="g_openloop_vf_offset_dbg", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_openloop_vf_gain_dbg", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_dbg_daxis_lock", RefreshRate=1, Window=Watched Data 1
+WatchedExpression="g_openloop_daxis_lock_dbg", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_openloop_theta_dbg", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_openloop_use_encoder_dbg", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_openloop_use_runtime_dt_dbg", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="motor(0)->samples.adc_offset_a", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].samples.adc_offset_a", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_motor[0].samples.adc_offset_b", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_motor[0].samples.b_get_offset", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_motor[0].b_start", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.theta_e", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.vd_set", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.vq_set", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.phase_curr_A", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.phase_curr_B", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.phase_curr_C", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.duty_norm[0]", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.duty_norm[1]", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.duty_norm[2]", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].hall.ang_est_limited_rad ", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].hall.vel_est_filtered_rads ", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_hall_val_dbg", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="ADC1->JDR1", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="ADC1->JDR2", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="TIM1->BDTR", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="TIM1->CCR1", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="TIM1->CCR2", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="TIM1->CCR3", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="TIM1->CCR4", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="TIM1->CNT", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="GPIOB->ODR", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="ADC1->CR2", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="ADC1->SR", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="ADC1->JSQR", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="ADC1->CR1", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="TIM1->CCER", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="TIM1->CCMR2", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_drv_write_count", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_drv_last_tx", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_drv_last_rx", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_drv_last_hal_status ", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].samples.adc_offset_a", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_drv_readback_00", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_drv_readback_02", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_drv_readback_03", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.id_mea", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.iq_mea", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_openloop_omega_e_dbg", Window=Watched Data 1

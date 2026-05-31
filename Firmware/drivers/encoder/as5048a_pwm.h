@@ -3,20 +3,6 @@
 
 #include "drivers/encoder/encoder_common.h"
 
-/* AS5048A in PWM output mode (datasheet rev 1.0):
- *   T_period(chip clk) = 4119
- *   T_init  (high)     = 12   (fixed start pulse)
- *   T_data  (high)     = pos  (0..4095, encodes angle)
- *   T_error (high)     = 4    (fixed error indicator)
- *
- * Measured by host TIM input capture:
- *   t_high_ticks    = total high width of one PWM frame
- *   t_period_ticks  = full period (rising edge to rising edge)
- *   tim_clk_hz      = host TIM tick frequency (e.g. 84e6 on F405)
- *
- * Returns true if the capture pair was valid and the state was advanced.
- */
-
 #define AS5048A_PWM_PERIOD_CLKS  4119U
 #define AS5048A_PWM_INIT_CLKS    12U
 #define AS5048A_PWM_ERROR_CLKS   4U

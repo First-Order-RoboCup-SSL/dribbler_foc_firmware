@@ -1,11 +1,7 @@
 #include "drivers/encoder/encoder_common.h"
 #include "controller/utils_math.h"
 
-void enc_state_init(enc_state_t *st,
-                    u16   pole_pairs,
-                    float offset_rad,
-                    s8    direction,
-                    float vel_lpf_alpha) {
+void enc_state_init(enc_state_t *st, u16   pole_pairs, float offset_rad, s8 direction, float vel_lpf_alpha) {
     st->pole_pairs      = pole_pairs ? pole_pairs : 1U;
     st->offset_rad      = offset_rad;
     st->direction       = (direction >= 0) ? 1 : -1;

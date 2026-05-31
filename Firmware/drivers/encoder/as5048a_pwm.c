@@ -1,9 +1,7 @@
 #include "drivers/encoder/as5048a_pwm.h"
 #include "controller/utils_math.h"
 
-bool as5048a_pwm_update_from_capture(enc_state_t *st, u32   t_high_ticks,
-                                     u32   t_period_ticks,
-                                     float tim_clk_hz) {
+bool as5048a_pwm_update_from_capture(enc_state_t *st, u32   t_high_ticks, u32   t_period_ticks, float tim_clk_hz) {
     if (t_period_ticks == 0U || t_high_ticks > t_period_ticks || tim_clk_hz <= 0.0f) {
         return false;
     }

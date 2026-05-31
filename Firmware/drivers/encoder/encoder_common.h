@@ -21,8 +21,6 @@ void enc_state_init(enc_state_t *st,
                     s8    direction,
                     float vel_lpf_alpha);
 
-/* dt_sec : time elapsed since the previous successful feed.
- *          The driver uses it to compute electrical velocity. */
 void enc_state_feed_mech_rad(enc_state_t *st, float angle_mech_rad, float dt_sec);
 
 static inline float enc_state_get_elec_angle(const enc_state_t *st) {

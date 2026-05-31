@@ -1,0 +1,17 @@
+#ifndef _DRV_AS5600_H_
+#define _DRV_AS5600_H_
+
+#include "drivers/encoder/encoder_common.h"
+
+/* AS5600 driver in analog-out mode (host-side ADC sampling).
+ * raw       : raw counts read by the host ADC
+ * raw_full  : ADC full-scale count (e.g. 4095 for 12-bit)
+ * dt_sec    : time elapsed since the previous call (for velocity)
+ *
+ * AS5600 output spans ~0..Vcc as the magnet rotates 0..360°. The host
+ * supplies (raw, raw_full); the driver maps it to mechanical angle and
+ * updates electrical angle + filtered electrical velocity.
+ */
+void as5600_update_from_raw(enc_state_t *st, u16 raw, u16 raw_full, float dt_sec);
+
+#endif /* _DRV_AS5600_H_ */

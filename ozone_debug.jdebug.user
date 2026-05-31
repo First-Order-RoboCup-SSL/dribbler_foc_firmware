@@ -1,9 +1,6 @@
 
 
-GraphedExpression="g_motor[0].controller.phase_curr_A", Color=#e56a6f, Show=0
-GraphedExpression="g_motor[0].controller.foc.iq_mea", Color=#35792b, Show=0
-GraphedExpression="g_motor[0].controller.foc.id_mea", Color=#769dda, Show=0
-GraphedExpression="g_motor[0].hall.vel_est_filtered_rads ", Color=#b14f0d, Show=0
+OpenDocument="ozone_debug.jdebug", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/ozone_debug.jdebug", Line=0
 OpenDocument="main.c", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Core/Src/main.c", Line=73
 OpenDocument="motor.h", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Firmware/controller/motor.h", Line=34
 OpenDocument="controller.c", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Firmware/controller/controller.c", Line=32
@@ -13,19 +10,19 @@ OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=0, w=288, h=466, FilterBarShown
 OpenWindow="Source Files", DockArea=LEFT, x=0, y=3, w=1086, h=103, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Disassembly", DockArea=BOTTOM, x=4, y=0, w=476, h=1431, TabPos=0, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=1, w=1086, h=139, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VectorCatchIndexMask=254
-OpenWindow="Memory 1", DockArea=BOTTOM, x=4, y=0, w=476, h=1431, TabPos=1, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x20000248
 OpenWindow="Watched Data 1", DockArea=BOTTOM, x=3, y=0, w=1794, h=1462, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=1086, h=103, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Memory Usage", DockArea=LEFT, x=0, y=2, w=1086, h=103, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Terminal", DockArea=BOTTOM, x=1, y=0, w=122, h=1462, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Data Sampling", DockArea=BOTTOM, x=0, y=0, w=814, h=1462, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
 OpenWindow="Console", DockArea=BOTTOM, x=2, y=0, w=470, h=1462, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Memory 1", DockArea=BOTTOM, x=4, y=0, w=476, h=1431, TabPos=1, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x20000248
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
 TableHeader="Vector Catches", SortCol="", SortOrder="ASCENDING", VisibleCols=["";"Vector Catch";"Description"], ColWidths=[50;300;721]
 TableHeader="Break & Tracepoints", SortCol="", SortOrder="ASCENDING", VisibleCols=["";"Type";"Location";"Extras"], ColWidths=[100;100;116;770]
-TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[832;113;100;100;434]
-TableHeader="Source Files", SortCol="File", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[554;126;100;100;1722]
-TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" g_motor[0].controller.phase_curr_A";" g_motor[0].controller.foc.iq_mea";" g_motor[0].controller.foc.id_mea";" g_motor[0].hall.vel_est_filtered_rads "], ColWidths=[100;100;100;100;100;100]
+TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[832;113;100;100;101]
+TableHeader="Source Files", SortCol="File", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[554;126;100;100;100]
+TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time"], ColWidths=[100;100]
 TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[490;100;100;100;100;114;141;161;168]
 TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
 TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;157;504]

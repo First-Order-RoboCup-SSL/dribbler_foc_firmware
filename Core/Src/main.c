@@ -46,11 +46,10 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-/* Bringup gates -- the firmware is inert at power-up. Use a debugger (Ozone
- * watch window) to set these in order:
- *   1) g_dbg_init        = 1  -> runs motor_init() once
- *   2) g_dbg_motor_mode  = N  -> 0=OPEN, 1=VELOCITY, 2=TORQUE, 3=CURRENT
- *   3) g_dbg_motor_start = 1  -> runs motor_start() in the selected mode
+/* ozone startup order
+ *   1. g_dbg_init        = 1  -> runs motor_init() once
+ *   2. g_dbg_motor_mode  = N  -> 0=OPEN, 1=VELOCITY, 2=TORQUE, 3=CURRENT
+ *   3. g_dbg_motor_start = 1  -> runs motor_start() in the selected mode
  * In CURRENT mode, set g_dbg_id_target / g_dbg_iq_target to drive setpoints. */
 volatile uint8_t g_dbg_init        = 0u;
 volatile uint8_t g_dbg_motor_start = 0u;
@@ -107,6 +106,8 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM6_Init();
   MX_SPI3_Init();
+  MX_SPI2_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   /* Intentionally do NOT call motor_init() here. The system stays dead
    * at power-up; motor_init is triggered from the main loop by g_dbg_init. */

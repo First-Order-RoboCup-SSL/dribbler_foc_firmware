@@ -1,0 +1,66 @@
+
+
+
+GraphedExpression="g_motor[0].controller.encoder_angle", Color=#e56a6f
+GraphedExpression="*(volatile uint32_t*)0x40000034 ", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#35792b, Show=0
+GraphedExpression="*(volatile uint32_t*)0x40000038", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#769dda, Show=0
+GraphedExpression="g_motor[0].controller.foc.id_mea", Color=#b14f0d
+GraphedExpression="g_motor[0].controller.foc.iq_mea", Color=#b3c38e
+GraphedExpression="g_motor[0].controller.phase_curr_A", Color=#ab7b05
+GraphedExpression="g_motor[0].controller.phase_curr_B", Color=#7fd3b7
+GraphedExpression="g_motor[0].controller.phase_curr_C", Color=#50328f
+OpenDocument="bsp_f405.c", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Firmware/bsp/stm32f405/bsp_f405.c", Line=125
+OpenDocument="hw_samples.c", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Firmware/controller/hw_samples.c", Line=126
+OpenDocument="foc.c", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Firmware/controller/foc.c", Line=195
+OpenDocument="motor.c", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Firmware/controller/motor.c", Line=95
+OpenDocument="ozone_debug.jdebug", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/ozone_debug.jdebug", Line=18
+OpenDocument="main.c", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Core/Src/main.c", Line=77
+OpenDocument="motor.h", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Firmware/controller/motor.h", Line=34
+OpenDocument="controller.c", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Firmware/controller/controller.c", Line=32
+OpenDocument="foc.h", FilePath="/home/yu/Documents/ssl-2026/deng_odrive_firmware/Firmware/controller/foc.h", Line=23
+OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=0, w=288, h=466, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=3, w=1086, h=103, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Disassembly", DockArea=BOTTOM, x=3, y=0, w=257, h=1462, TabPos=0, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=1, w=1086, h=139, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VectorCatchIndexMask=254
+OpenWindow="Watched Data 1", DockArea=BOTTOM, x=2, y=0, w=1904, h=1462, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=1086, h=103, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Memory Usage", DockArea=LEFT, x=0, y=2, w=1086, h=103, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Terminal", DockArea=BOTTOM, x=0, y=0, w=166, h=1462, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Timeline", DockArea=BOTTOM, x=1, y=0, w=1355, h=1462, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="188;974", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="542;0", CodeGraphLegendShown=0, CodeGraphLegendPosition="445;0"
+SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
+TableHeader="Vector Catches", SortCol="", SortOrder="ASCENDING", VisibleCols=["";"Vector Catch";"Description"], ColWidths=[50;300;721]
+TableHeader="Break & Tracepoints", SortCol="", SortOrder="ASCENDING", VisibleCols=["";"Type";"Location";"Extras"], ColWidths=[100;100;116;770]
+TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[832;113;100;100;434]
+TableHeader="Source Files", SortCol="File", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[554;126;100;100;1722]
+TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[100;157;196]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[429;291;134;1050]
+TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;1573]
+WatchedExpression="g_dbg_init", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_dbg_motor_start", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_dbg_motor_mode", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_dbg_daxis_lock", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_dbg_id_target", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_dbg_iq_target", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.encoder_angle", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.encoder_velocity", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_openloop_omega_e_dbg", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_openloop_vf_gain_dbg", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_openloop_vf_offset_dbg", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_openloop_vq_limit_dbg", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="*(volatile uint32_t*)0x40000034 ", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="*(volatile uint32_t*)0x40000038", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_openloop_use_encoder_dbg", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_mag_encoder_offset_dbg", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.id_mea", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.iq_mea", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.phase_curr_A", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.phase_curr_B", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.phase_curr_C", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_openloop_theta_dbg", Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.vq_out", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.vd_out", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.foc.theta_e", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="g_motor[0].controller.encoder_angle", RefreshRate=2, Window=Watched Data 1

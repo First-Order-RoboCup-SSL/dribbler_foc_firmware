@@ -28,4 +28,15 @@ void pwm_update_duty(u16 a, u16 b, u16 c);
 void pwm_enable_channel(void);
 void pwm_disable_channel(void);
 
+/* magnetic encoder driver functions (MCU-agnostic interface) */
+void  bsp_mag_encoder_init(void);
+void  bsp_mag_encoder_update(void);
+float bsp_mag_encoder_get_elec_angle(void);
+float bsp_mag_encoder_get_velocity(void);
+
+/* hall encoder driver functions */
+void bsp_hall_encoder_init(void);
+void bsp_hall_encoder_irq_update(void);
+int  bsp_hall_encoder_get_val(void);
+
 #endif /* __BSP_DRIVERS_H__ */

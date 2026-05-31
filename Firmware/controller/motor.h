@@ -67,6 +67,7 @@ static inline void motor_init_encoder(motor_t *motor) {
     bsp_hall_encoder_init();
     foc_hall_init(&motor->hall);
 #elif (CONFIG_USE_MAG_ENCODER)
+    bsp_mag_encoder_init();
 #endif
 }
 

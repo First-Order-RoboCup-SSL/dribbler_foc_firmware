@@ -54,13 +54,6 @@
 
 int32_t board_get_error(void);
 
-void  bsp_mag_encoder_update(void);
-float bsp_mag_encoder_get_elec_angle(void);
-float bsp_mag_encoder_get_velocity(void);
-void  bsp_hall_encoder_init(void);
-void  bsp_hall_encoder_irq_update(void);
-int   bsp_hall_encoder_get_val(void);
-
 extern volatile float g_vbus_voltage_dbg;
 
 #endif /* __BSP_G431_H__ */

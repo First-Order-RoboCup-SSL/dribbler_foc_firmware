@@ -2,6 +2,11 @@
 #include "bsp/bsp_drivers.h"
 #include "config.h"
 #include "controller/utils_math.h"
+#include "controller/types.h"
+
+#if (CONFIG_MAG_ENCODER_TYPE == CONFIG_MAG_ENCODER_AS5048A_PWM)
+#include "drivers/encoder/as5048a_pwm.h"
+#endif
 
 #include "main.h"
 #include "tim.h"
@@ -130,9 +135,112 @@ void adc_get_phase_curr_value(uint8_t chan, int16_t *adc1, int16_t *adc2) {
 int16_t adc_get_dc_voltage_value(void) { return 0; }
 int16_t adc_get_dc_current_value(void) { return 0; }
 
-void bsp_mag_encoder_update(void) {}
-float bsp_mag_encoder_get_elec_angle(void) { return 0.0f; }
-float bsp_mag_encoder_get_velocity(void)   { return 0.0f; }
+#if (CONFIG_MAG_ENCODER_TYPE == CONFIG_MAG_ENCODER_AS5048A_PWM)
+
+/* AS5048A PWM output, TIM2 CH2 input capture on F405 (PA1)
+ *
+ * CubeMX generates only CH2 direct/rising. We patch up the rest at
+ * runtime so a re-gen does not require manual edits to MX_TIM2_Init():
+ *   - CH1: indirect, falling -> captures high pulse width
+ *   - Slave mode: Reset on TI2FP2 -> CCR2 captures full period
+ *   - NVIC: enable TIM2 IRQ (CubeMX leaves it off)
+ */
+
+#define MAG_ENC_VEL_LPF_ALPHA   0.05f
+
+static enc_state_t      s_enc;
+static volatile u32     s_t_period_ticks = 0;
+static volatile u32     s_t_high_ticks   = 0;
+static volatile bool    s_frame_dirty    = false;
+static volatile bool    s_high_seen      = false;
+static float            s_tim2_clk_hz    = 84.0e6f;
+
+void bsp_mag_encoder_init(void) {
+    enc_state_init(&s_enc, (u16)CONFIG_MOTOR_PARAMS_Poles, 0.0f, 1, MAG_ENC_VEL_LPF_ALPHA);
+
+    /* TIM2 clock = APB1 timer clock. On F405 with PCLK1/4 prescaler it
+     * runs at PCLK1*2 = 84 MHz. Read it at init to be robust to clock
+     * tree changes. */
+    s_tim2_clk_hz = (float)(HAL_RCC_GetPCLK1Freq() * 2U);
+
+    /* CH1: indirect mapping (CC1S = 10b -> IC1 attached to TI2), falling. */
+    TIM_IC_InitTypeDef ic1 = {0};
+    ic1.ICPolarity   = TIM_INPUTCHANNELPOLARITY_FALLING;
+    ic1.ICSelection  = TIM_ICSELECTION_INDIRECTTI;
+    ic1.ICPrescaler  = TIM_ICPSC_DIV1;
+    ic1.ICFilter     = 4;
+    HAL_TIM_IC_ConfigChannel(&htim2, &ic1, TIM_CHANNEL_1);
+
+    /* CH2: reaffirm direct rising with a small filter. */
+    TIM_IC_InitTypeDef ic2 = {0};
+    ic2.ICPolarity   = TIM_INPUTCHANNELPOLARITY_RISING;
+    ic2.ICSelection  = TIM_ICSELECTION_DIRECTTI;
+    ic2.ICPrescaler  = TIM_ICPSC_DIV1;
+    ic2.ICFilter     = 4;
+    HAL_TIM_IC_ConfigChannel(&htim2, &ic2, TIM_CHANNEL_2);
+
+    /* Slave mode: reset on TI2FP2 rising edge so CCR2 = full period. */
+    MODIFY_REG(TIM2->SMCR, TIM_SMCR_SMS | TIM_SMCR_TS,
+               TIM_SLAVEMODE_RESET | TIM_TS_TI2FP2);
+
+    /* NVIC: CubeMX did not enable the TIM2 line. */
+    HAL_NVIC_SetPriority(TIM2_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(TIM2_IRQn);
+
+    /* Start CH2 first (it carries the trigger), then CH1. */
+    HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_2);
+    HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_1);
+}
+
+void TIM2_IRQHandler(void) {
+    HAL_TIM_IRQHandler(&htim2);
+}
+
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
+    if (htim->Instance != TIM2) {
+        return;
+    }
+    if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2) {
+        s_t_period_ticks = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
+        /* Only flag a frame ready when CH1 has captured at least once,
+         * so the (period, high) pair belongs to the same frame. */
+        if (s_high_seen) {
+            s_frame_dirty = true;
+        }
+    } else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
+        s_t_high_ticks = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
+        s_high_seen    = true;
+    }
+}
+
+void bsp_mag_encoder_update(void) {
+    u32 period;
+    u32 high;
+    bool dirty;
+
+    /* Critical section so the (period, high) pair cannot span two frames. */
+    __disable_irq();
+    dirty = s_frame_dirty;
+    period = s_t_period_ticks;
+    high   = s_t_high_ticks;
+    s_frame_dirty = false;
+    __enable_irq();
+
+    if (!dirty) {
+        return;
+    }
+    as5048a_pwm_update_from_capture(&s_enc, high, period, s_tim2_clk_hz);
+}
+
+float bsp_mag_encoder_get_elec_angle(void) { return enc_state_get_elec_angle(&s_enc); }
+float bsp_mag_encoder_get_velocity(void)   { return enc_state_get_velocity(&s_enc); }
+
+#else
+void  bsp_mag_encoder_init(void)            {}
+void  bsp_mag_encoder_update(void)          {}
+float bsp_mag_encoder_get_elec_angle(void)  { return 0.0f; }
+float bsp_mag_encoder_get_velocity(void)    { return 0.0f; }
+#endif
 
 volatile int g_hall_val_dbg = 0;
 volatile int g_hall_val_min = 0xFF;

@@ -49,12 +49,27 @@
 #define CONFIG_MOTOR_ENCODER_OFFSET 0.0f
 #endif
 #ifndef CONFIG_THETA_INVERT
-#define CONFIG_THETA_INVERT 0
+#define CONFIG_THETA_INVERT 1 // must be 1 for tha tparticular installation of mag sensor on dribbler!  0 for hall
 #endif
 
 #ifndef CONFIG_MAG_ENCODER_OFFSET_RAD
-#define CONFIG_MAG_ENCODER_OFFSET_RAD 5.66f   /* mag encoder only. 2804+AS5600 calibrated */
+#define CONFIG_MAG_ENCODER_OFFSET_RAD 0.0f // not calibrated yet
 #endif
+
+/* Magnetic encoder device selection */
+#define CONFIG_MAG_ENCODER_AS5600       1  
+#define CONFIG_MAG_ENCODER_AS5048A_PWM  2  
+
+#ifndef CONFIG_MAG_ENCODER_TYPE
+#  if defined(STM32G431xx)
+#    define CONFIG_MAG_ENCODER_TYPE CONFIG_MAG_ENCODER_AS5600
+#  elif defined(STM32F405xx)
+#    define CONFIG_MAG_ENCODER_TYPE CONFIG_MAG_ENCODER_AS5048A_PWM
+#  else
+#    define CONFIG_MAG_ENCODER_TYPE CONFIG_MAG_ENCODER_AS5600
+#  endif
+#endif
+
 #ifndef CONFIG_OPENLOOP_VF_OFFSET
 #define CONFIG_OPENLOOP_VF_OFFSET 0.02f   /* hall calibration: ~67mA on dribbler */
 #endif

@@ -39,8 +39,8 @@
 #define CONFIG_HW_MAX_DC_CURRENT    20
 #define CONFIG_HW_MAX_PHASE_CURR    30
 
-#define CONFIG_USE_MAG_ENCODER      0
-#define CONFIG_USE_HALL_ENCODER     1
+#define CONFIG_USE_MAG_ENCODER      1
+#define CONFIG_USE_HALL_ENCODER     0
 #define CONFIG_ENCODER_ABI          0
 #define CONFIG_ENCODER_ABS          0
 #define CONFIG_ENCODER_PWM          0
@@ -54,13 +54,6 @@
 #define CONFIG_UART_RX_BUFFER_SIZE  512
 
 int32_t board_get_error(void);
-
-void  bsp_mag_encoder_update(void);
-float bsp_mag_encoder_get_elec_angle(void);
-float bsp_mag_encoder_get_velocity(void);
-void  bsp_hall_encoder_init(void);
-void  bsp_hall_encoder_irq_update(void);
-int   bsp_hall_encoder_get_val(void);
 
 extern volatile float g_vbus_voltage_dbg;
 

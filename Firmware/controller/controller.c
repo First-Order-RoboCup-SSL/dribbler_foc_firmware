@@ -210,6 +210,10 @@ u8 contrl_update_mode(controller_t *ctrl) {
         ctrl->mode_running = ctrl->mode_request;
     }
     if (mode_last != ctrl->mode_running) {
+        /* Avoid carrying current-loop integral state across mode switches. */
+        pi_reset(&ctrl->foc.pi_con_id, 0.0f);
+        pi_reset(&ctrl->foc.pi_con_iq, 0.0f);
+
         if (ctrl->mode_running == CTRL_MODE_CURRENT) {
             line_ramp_reset(&ctrl->id_target, 0);
             line_ramp_reset(&ctrl->iq_target, 0);

@@ -22,12 +22,12 @@ void OnProjectLoad (void) {
   //
   // Dialog-generated settings
   //
-  Project.AddPathSubstitute ("/home/yu/Documents/ssl-2026/deng_odrive_firmware", "$(ProjectDir)");
-  Project.AddPathSubstitute ("/home/yu/documents/ssl-2026/deng_odrive_firmware", "$(ProjectDir)");
   Project.SetDevice ("STM32F405RG");
   Project.SetHostIF ("USB", "");
   Project.SetTargetIF ("SWD");
   Project.SetTIFSpeed ("4 MHz");
+  Project.AddPathSubstitute ("/home/yu/Documents/ssl-2026/deng_odrive_firmware", "$(ProjectDir)");
+  Project.AddPathSubstitute ("/home/yu/documents/ssl-2026/deng_odrive_firmware", "$(ProjectDir)");
   Project.AddSvdFile ("$(InstallDir)/Config/CPU/Cortex-M4F.svd");
   //
   // User settings

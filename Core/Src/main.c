@@ -56,7 +56,14 @@
  * default); 1 = Ozone override, PA0 is ignored and the g_dbg_* variables below
  * are driven manually from the debugger. Flip this in Ozone to take control. */
 volatile uint8_t g_dbg_override    = 0u;
-volatile uint8_t g_dbg_init        = 0u;
+/* Diagnostics readable in Ozone: g_reset_cause latches RCC->CSR at boot;
+ * g_loop_count is a free-running heartbeat (no reset => it keeps climbing). */
+volatile uint32_t g_reset_cause    = 0u;
+volatile uint32_t g_loop_count     = 0u;
+/* NOTE: g_dbg_init was removed — init now happens at boot, so the variable was
+ * unused and the linker (--gc-sections) stripped it. An unused symbol resolves
+ * to address 0x00000000, and writing it from Ozone pokes a null pointer, which
+ * faults the debug access and drops the J-Link. Do not re-add it unused. */
 volatile uint8_t g_dbg_motor_start = 0u;
 volatile uint8_t g_dbg_daxis_lock  = 0u;
 volatile uint8_t g_dbg_motor_mode  = 0u;   /* CTRL_MODE_OPEN */
@@ -95,7 +102,15 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  /* Latch the reset cause so Ozone can tell a power/brownout reset apart from a
+   * pure debug-link drop. Read g_reset_cause after a "disconnect":
+   *   bit 25 BORRSTF / bit 27 PORRSTF set -> brownout/power reset (supply sag)
+   *   bit 28 SFTRSTF                 set -> software reset
+   *   bit 29 IWDGRSTF / 30 WWDGRSTF  set -> watchdog
+   * If the target did NOT reset at all (g_loop_count kept climbing), the CPU
+   * stayed alive and only the J-Link link dropped -> EMI on the SWD lines. */
+  g_reset_cause = RCC->CSR;
+  __HAL_RCC_CLEAR_RESET_FLAGS();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -136,6 +151,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    g_loop_count++;   /* heartbeat: if this keeps climbing after a "disconnect",
+                       * the CPU never reset and only the SWD link dropped (EMI). */
+
     /* Production: external MCU start/enable on PA0 drives the g_dbg_* controls.
      * A stable high => start in CURRENT mode, low => stop. The level is debounced
      * to reject glitches/EMI, and a low must be observed at least once before the
@@ -155,7 +173,7 @@ int main(void)
 
         g_dbg_motor_mode  = CTRL_MODE_CURRENT;
         g_dbg_motor_start = s_cmd_on;
-        g_dbg_iq_target   = s_cmd_on ? -1.9f : 0.0f;
+        g_dbg_iq_target   = s_cmd_on ? -1.6f : 0.0f;
     }
 
     if (g_dbg_motor_start == 0u && motor(0)->b_start) {

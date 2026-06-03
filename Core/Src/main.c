@@ -52,6 +52,10 @@
  * driven by the external PA0 line (see main loop). These debug variables remain
  * for Ozone bring-up: set g_dbg_motor_mode (0=OPEN,1=VELOCITY,2=TORQUE,3=CURRENT)
  * and the matching target, e.g. g_dbg_id_target / g_dbg_iq_target in CURRENT. */
+/* Control source: 0 = PA0 external line drives start/mode/setpoint (production
+ * default); 1 = Ozone override, PA0 is ignored and the g_dbg_* variables below
+ * are driven manually from the debugger. Flip this in Ozone to take control. */
+volatile uint8_t g_dbg_override    = 0u;
 volatile uint8_t g_dbg_init        = 0u;
 volatile uint8_t g_dbg_motor_start = 0u;
 volatile uint8_t g_dbg_daxis_lock  = 0u;
@@ -132,23 +136,27 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    /* External MCU start/enable on PA0: a stable high => start in CURRENT mode,
-     * low => stop. The level is debounced to reject glitches/EMI, and a low must
-     * be observed at least once before the first start, so a line that is already
-     * high at power-up cannot auto-spin the motor. */
-    uint8_t  raw = (HAL_GPIO_ReadPin(EXT_START_GPIO_Port, EXT_START_Pin) == GPIO_PIN_SET) ? 1u : 0u;
-    uint32_t now = HAL_GetTick();
-    if (raw != s_raw_prev) {
-        s_raw_prev  = raw;
-        s_raw_since = now;
-    } else if ((now - s_raw_since) >= EXT_START_DEBOUNCE_MS) {
-        if (raw == 0u) { s_seen_low = 1u; }
-        s_cmd_on = (raw && s_seen_low) ? 1u : 0u;
-    }
+    /* Production: external MCU start/enable on PA0 drives the g_dbg_* controls.
+     * A stable high => start in CURRENT mode, low => stop. The level is debounced
+     * to reject glitches/EMI, and a low must be observed at least once before the
+     * first start, so a line that is already high at power-up cannot auto-spin the
+     * motor. When g_dbg_override is set (Ozone), PA0 is ignored and the g_dbg_*
+     * variables are left untouched for manual control from the debugger. */
+    if (!g_dbg_override) {
+        uint8_t  raw = (HAL_GPIO_ReadPin(EXT_START_GPIO_Port, EXT_START_Pin) == GPIO_PIN_SET) ? 1u : 0u;
+        uint32_t now = HAL_GetTick();
+        if (raw != s_raw_prev) {
+            s_raw_prev  = raw;
+            s_raw_since = now;
+        } else if ((now - s_raw_since) >= EXT_START_DEBOUNCE_MS) {
+            if (raw == 0u) { s_seen_low = 1u; }
+            s_cmd_on = (raw && s_seen_low) ? 1u : 0u;
+        }
 
-    g_dbg_motor_mode  = CTRL_MODE_CURRENT;
-    g_dbg_motor_start = s_cmd_on;
-    g_dbg_iq_target   = s_cmd_on ? -1.9f : 0.0f;
+        g_dbg_motor_mode  = CTRL_MODE_CURRENT;
+        g_dbg_motor_start = s_cmd_on;
+        g_dbg_iq_target   = s_cmd_on ? -1.9f : 0.0f;
+    }
 
     if (g_dbg_motor_start == 0u && motor(0)->b_start) {
         motor_stop(motor(0));

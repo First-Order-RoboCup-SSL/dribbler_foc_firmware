@@ -53,7 +53,7 @@
 #endif
 
 #ifndef CONFIG_MAG_ENCODER_OFFSET_RAD
-#define CONFIG_MAG_ENCODER_OFFSET_RAD 0.0f // not calibrated yet
+#define CONFIG_MAG_ENCODER_OFFSET_RAD -1.57f // not calibrated yet
 #endif
 
 /* Magnetic encoder device selection */

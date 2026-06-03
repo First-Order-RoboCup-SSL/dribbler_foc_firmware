@@ -83,7 +83,9 @@ void Error_Handler(void);
 #define HALL_B_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-
+/* External MCU start/enable input (drive high to spin, low/floating to stop) */
+#define EXT_START_Pin       GPIO_PIN_0
+#define EXT_START_GPIO_Port GPIOA
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

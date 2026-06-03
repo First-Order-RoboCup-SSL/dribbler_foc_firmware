@@ -117,11 +117,28 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   static uint8_t s_motor_initialized = 0u;
   static uint8_t s_last_mode = 0xFFu;
+
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    /* External MCU start/enable on PB2: high => start in CURRENT mode, low => stop.
+     * We just drive the existing debug controls; everything below is unchanged. */
+    if (HAL_GPIO_ReadPin(EXT_START_GPIO_Port, EXT_START_Pin) == GPIO_PIN_SET) {
+        g_dbg_init       = 1u;
+        g_dbg_motor_mode = CTRL_MODE_CURRENT;
+        g_dbg_motor_start = 1u;
+
+        g_dbg_iq_target = -1.6;
+    } else {
+        g_dbg_init       = 1u;
+        g_dbg_motor_mode = CTRL_MODE_CURRENT;
+        g_dbg_motor_start = 0u;
+
+        g_dbg_iq_target = 0;
+    }
+
     if (!s_motor_initialized) {
         if (g_dbg_init == 1u) {
             motor_init(motor(0));

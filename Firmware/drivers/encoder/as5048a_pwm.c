@@ -14,13 +14,11 @@ bool as5048a_pwm_update_from_capture(enc_state_t *st, u32   t_high_ticks, u32   
         return false;
     }
 
-    s32 raw = (s32)(chip_high + 0.5f)
-              - (s32)AS5048A_PWM_INIT_CLKS
-              - (s32)AS5048A_PWM_ERROR_CLKS;
-
+    s32 raw = (s32)(chip_high + 0.5f) - (s32)AS5048A_PWM_INIT_CLKS - (s32)AS5048A_PWM_ERROR_CLKS;
     if (raw < 0) {
         return false;
     }
+    
     if (raw >= (s32)AS5048A_PWM_DATA_RANGE) raw = (s32)AS5048A_PWM_DATA_RANGE - 1;
 
     float angle_mech = ((float)raw / (float)AS5048A_PWM_DATA_RANGE) * M_2PI;

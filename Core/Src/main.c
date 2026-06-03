@@ -40,17 +40,18 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+/* External start input (PA0) must be stable for this long before it is acted
+ * on, to reject glitches/EMI on the single control line. */
+#define EXT_START_DEBOUNCE_MS 5u
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-/* ozone startup order
- *   1. g_dbg_init        = 1  -> runs motor_init() once
- *   2. g_dbg_motor_mode  = N  -> 0=OPEN, 1=VELOCITY, 2=TORQUE, 3=CURRENT
- *   3. g_dbg_motor_start = 1  -> runs motor_start() in the selected mode
- * In CURRENT mode, set g_dbg_id_target / g_dbg_iq_target to drive setpoints. */
+/* In normal operation the motor is initialised once at boot and start/stop is
+ * driven by the external PA0 line (see main loop). These debug variables remain
+ * for Ozone bring-up: set g_dbg_motor_mode (0=OPEN,1=VELOCITY,2=TORQUE,3=CURRENT)
+ * and the matching target, e.g. g_dbg_id_target / g_dbg_iq_target in CURRENT. */
 volatile uint8_t g_dbg_init        = 0u;
 volatile uint8_t g_dbg_motor_start = 0u;
 volatile uint8_t g_dbg_daxis_lock  = 0u;
@@ -109,43 +110,45 @@ int main(void)
   MX_SPI2_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  /* Intentionally do NOT call motor_init() here. The system stays dead
-   * at power-up; motor_init is triggered from the main loop by g_dbg_init. */
+  /* Initialise the motor once here, with the gate driver still disabled and the
+   * machine at rest. No torque is produced until motor_start() (gate stays off),
+   * and this quiescent state is the ideal moment for phase-current offset
+   * calibration done inside motor_init(). */
+  motor_init(motor(0));
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  static uint8_t s_motor_initialized = 0u;
   static uint8_t s_last_mode = 0xFFu;
+
+  /* Debounced external start input (PA0). */
+  static uint8_t  s_cmd_on   = 0u;   /* debounced start command */
+  static uint8_t  s_raw_prev = 0u;   /* last raw level */
+  static uint32_t s_raw_since = 0u;  /* tick when the raw level last changed */
+  static uint8_t  s_seen_low = 0u;   /* a low must be seen before the first start */
 
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    /* External MCU start/enable on PB2: high => start in CURRENT mode, low => stop.
-     * We just drive the existing debug controls; everything below is unchanged. */
-    if (HAL_GPIO_ReadPin(EXT_START_GPIO_Port, EXT_START_Pin) == GPIO_PIN_SET) {
-        g_dbg_init       = 1u;
-        g_dbg_motor_mode = CTRL_MODE_CURRENT;
-        g_dbg_motor_start = 1u;
-
-        g_dbg_iq_target = -1.6;
-    } else {
-        g_dbg_init       = 1u;
-        g_dbg_motor_mode = CTRL_MODE_CURRENT;
-        g_dbg_motor_start = 0u;
-
-        g_dbg_iq_target = 0;
+    /* External MCU start/enable on PA0: a stable high => start in CURRENT mode,
+     * low => stop. The level is debounced to reject glitches/EMI, and a low must
+     * be observed at least once before the first start, so a line that is already
+     * high at power-up cannot auto-spin the motor. */
+    uint8_t  raw = (HAL_GPIO_ReadPin(EXT_START_GPIO_Port, EXT_START_Pin) == GPIO_PIN_SET) ? 1u : 0u;
+    uint32_t now = HAL_GetTick();
+    if (raw != s_raw_prev) {
+        s_raw_prev  = raw;
+        s_raw_since = now;
+    } else if ((now - s_raw_since) >= EXT_START_DEBOUNCE_MS) {
+        if (raw == 0u) { s_seen_low = 1u; }
+        s_cmd_on = (raw && s_seen_low) ? 1u : 0u;
     }
 
-    if (!s_motor_initialized) {
-        if (g_dbg_init == 1u) {
-            motor_init(motor(0));
-            s_motor_initialized = 1u;
-        }
-        continue;  /* nothing else runs until motor_init has completed */
-    }
+    g_dbg_motor_mode  = CTRL_MODE_CURRENT;
+    g_dbg_motor_start = s_cmd_on;
+    g_dbg_iq_target   = s_cmd_on ? -1.9f : 0.0f;
 
     if (g_dbg_motor_start == 0u && motor(0)->b_start) {
         motor_stop(motor(0));

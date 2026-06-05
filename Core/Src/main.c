@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "controller/motor.h"
+#include "config.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -173,7 +174,7 @@ int main(void)
 
         g_dbg_motor_mode  = CTRL_MODE_CURRENT;
         g_dbg_motor_start = s_cmd_on;
-        g_dbg_iq_target   = s_cmd_on ? -1.6f : 0.0f;
+        g_dbg_iq_target   = s_cmd_on ? CONFIG_DRIBBLER_IQ : 0.0f;
     }
 
     if (g_dbg_motor_start == 0u && motor(0)->b_start) {

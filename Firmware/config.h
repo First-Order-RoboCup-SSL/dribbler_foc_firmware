@@ -49,23 +49,27 @@
 #define CONFIG_MOTOR_ENCODER_OFFSET 0.0f
 #endif
 
-#define CONFIG_ROBOT_INDEX_A 1
-#define CONFIG_ROBOT_INDEX_B 0
+#define CONFIG_ROBOT_INDEX_A 0
+#define CONFIG_ROBOT_INDEX_B 1
 #define CONFIG_ROBOT_INDEX_C 0
 #define CONFIG_ROBOT_INDEX_D 0
 
 #if     CONFIG_ROBOT_INDEX_A
-#define CONFIG_MAG_ENCODER_OFFSET_RAD -2.2f
+#define CONFIG_MAG_ENCODER_OFFSET_RAD -4.25f
 #define CONFIG_THETA_INVERT           1
+#define CONFIG_DRIBBLER_IQ            -2.0f
 #elif   CONFIG_ROBOT_INDEX_B
-#define CONFIG_MAG_ENCODER_OFFSET_RAD 0.0f /* not calibrated */
-#define CONFIG_THETA_INVERT           1 // DANGER, not calibrated
+#define CONFIG_MAG_ENCODER_OFFSET_RAD 1.3f
+#define CONFIG_THETA_INVERT           1 
+#define CONFIG_DRIBBLER_IQ            -1.8f
 #elif   CONFIG_ROBOT_INDEX_C
 #define CONFIG_MAG_ENCODER_OFFSET_RAD 0.0f /* not calibrated */
 #define CONFIG_THETA_INVERT           1 // DANGER, not calibrated
+#define CONFIG_DRIBBLER_IQ            -1.6f
 #elif   CONFIG_ROBOT_INDEX_D
 #define CONFIG_MAG_ENCODER_OFFSET_RAD 0.0f /* not calibrated */
 #define CONFIG_THETA_INVERT           1 // DANGER, not calibrated
+#define CONFIG_DRIBBLER_IQ            -1.6f
 #else
 #error "no robot index"
 #endif
